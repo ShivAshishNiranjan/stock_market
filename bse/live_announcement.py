@@ -19,6 +19,8 @@ def format_corporate_action(data):
 
 
 def get_corporate_action(corporate_action, start_date, end_date):
+    print("Start Date {}".format(start_date))
+    print("End Date {}".format(end_date))
     dividend = []
     bonus = []
     split = []
@@ -68,7 +70,6 @@ def get_corporate_action(corporate_action, start_date, end_date):
     result = {"dividend": dividend, "bonus": bonus, "split": split, "buyback": buyback}
 
     return result
-
 
 # for corporate_action in corporate_actions:
 #     dividend = []

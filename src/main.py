@@ -5,12 +5,10 @@ from datetime import datetime
 app = Flask(__name__)
 
 
-start_date = datetime.today().strftime('%Y%m%d')
-end_date = start_date
-
-
 @app.route("/")
 def index():
+    start_date = datetime.today().strftime('%Y%m%d')
+    end_date = datetime.today().strftime('%Y%m%d')
     corporate_actions = ["Board+Meeting", "Corp.+Action", "AGM/EGM"]
     dividend = []
     bonus = []
@@ -28,8 +26,9 @@ def index():
             buyback.append(result.get("buyback"))
 
     return render_template("index.html", dividend=dividend, bonus=bonus, split=split, buyback=buyback,
-                           date=datetime.today().strftime('%Y-%m-%d'))
+                           start_date=datetime.today().strftime('%Y-%m-%d'),
+                           end_date=datetime.today().strftime('%Y-%m-%d'))
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8081, debug=True)
+    app.run(host="0.0.0.0", port=8082, debug=True)

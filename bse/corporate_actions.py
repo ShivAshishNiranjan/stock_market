@@ -1,14 +1,17 @@
+import datetime
+
 import requests
+
 from bse.common_helper import get_current_script_price
 
-start_date = "20210401"
-end_date = "20220331"
+start_date = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime('%Y%m%d')
+end_date = "20211231"
 
 corporate_actions = [
     {"name": "Bonus", "code": "P5"},
     {"name": "Buyback", "code": "P6"},
-    {"name": "Dividend", "code": "P9"},
-    {"name": "Split", "code": "P26"}
+    {"name": "Split", "code": "P26"},
+    {"name": "Dividend", "code": "P9"}
 ]
 
 bonus = []
@@ -47,7 +50,36 @@ for corporate_action in corporate_actions:
     results = response.json()
 
     for result in results:
-        print("Script Name: {} --> Script Price: {} --> Corporate Action: {}".format(result["long_name"],
-                                                                                     get_current_script_price(
-                                                                                         result["scrip_code"]),
-                                                                                     result["Purpose"]))
+
+        if "Dividend" in corporate_action["name"]:
+            if len(result["Purpose"].split('-')) >= 2:
+                dividend = float(result["Purpose"].split('-')[2].strip())
+                if get_current_script_price(result["scrip_code"]) != '':
+                    dividend_yield = 100 * dividend / float(
+                        get_current_script_price(result["scrip_code"]))
+                    if dividend_yield > 2.5:
+                        print("---------------------------------------------------------------------------------")
+                        print(
+                            "Opportunity in {} \n dividend_yield {:.2f} \n dividend {} \n Price {} \n Ex-Date: {}".format(
+                                result["long_name"],
+                                dividend_yield,
+                                dividend,
+                                get_current_script_price(
+                                    result[
+                                        "scrip_code"]),
+                                result["Ex_date"]
+
+                            ))
+                        print("---------------------------------------------------------------------------------")
+
+
+        else:
+            print(
+                "Script Name: {} \n Script Price: {} \n Corporate Action: {} \n Ex-Date: {}".format(result["long_name"],
+                                                                                                    get_current_script_price(
+                                                                                                        result[
+                                                                                                            "scrip_code"]),
+                                                                                                    result["Purpose"],
+                                                                                                    result["Ex_date"]))
+
+            print("---------------------------------------------------------------------------------")

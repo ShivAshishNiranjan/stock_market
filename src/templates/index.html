@@ -1,6 +1,6 @@
 <!-- templates/for_loop.html -->
 
-<h1>Corporate Actions {{date}}</h1>
+<h1>Corporate Action Announcement [ {{start_date}} - {{end_date}}]</h1>
 <h2></h2>
 
 
@@ -8,57 +8,68 @@
 <p>
     {% for data in bonus %}
     {% for ata in data %}
-    <br>{{ ata['NEWSSUB'] }}</br>
-    <br> {{ ata['ATTACHMENTNAME'] }}</br>
-    <br>{{ ata['Price'] }}</br>
-    <br>{{ ata['News_submission_dt'] }}</br>
-    <br>{{ ata['DissemDT'] }}</br>
 <hr>
+<br>{{ ata['NEWSSUB'] }}</br>
+<br> {{ ata['ATTACHMENTNAME'] }}</br>
+<br>{{ ata['Price'] }}</br>
+<br>{{ ata['News_submission_dt'] }}</br>
+<br>{{ ata['DissemDT'] }}</br>
 {% endfor %}
 {% endfor %}
 </p>
 
+<hr>
+<hr>
 
 <h3> Split </h3>
 <p>
+
     {% for data in split %}
     {% for ata in data %}
-    <br>{{ ata['NEWSSUB'] }}</br>
-    <br> {{ ata['ATTACHMENTNAME'] }}</br>
-    <br>{{ ata['Price'] }}</br>
-    <br>{{ ata['News_submission_dt'] }}</br>
-    <br>{{ ata['DissemDT'] }}</br>
 <hr>
+<br>{{ ata['NEWSSUB'] }}</br>
+<br> {{ ata['ATTACHMENTNAME'] }}</br>
+<br>{{ ata['Price'] }}</br>
+<br>{{ ata['News_submission_dt'] }}</br>
+<br>{{ ata['DissemDT'] }}</br>
+
 {% endfor %}
 {% endfor %}
 </p>
 
+<hr>
+<hr>
 
 <h3> Buyback </h3>
 <p>
+
     {% for data in buyback %}
     {% for ata in data %}
-    <br>{{ ata['NEWSSUB'] }}</br>
-    <br> {{ ata['ATTACHMENTNAME'] }}</br>
-    <br>{{ ata['Price'] }}</br>
-    <br>{{ ata['News_submission_dt'] }}</br>
-    <br>{{ ata['DissemDT'] }}</br>
 <hr>
+<br>{{ ata['NEWSSUB'] }}</br>
+<br> {{ ata['ATTACHMENTNAME'] }}</br>
+<br>{{ ata['Price'] }}</br>
+<br>{{ ata['News_submission_dt'] }}</br>
+<br>{{ ata['DissemDT'] }}</br>
+
 {% endfor %}
 {% endfor %}
 </p>
 
+<hr>
+<hr>
 
 <h3> Dividend </h3>
 <p>
     {% for data in dividend %}
     {% for ata in data %}
-    <br>{{ ata['NEWSSUB'] }}</br>
-    <br> {{ ata['ATTACHMENTNAME'] }}</br>
-    <br>{{ ata['Price'] }}</br>
-    <br>{{ ata['News_submission_dt'] }}</br>
-    <br>{{ ata['DissemDT'] }}</br>
 <hr>
+<br>{{ ata['NEWSSUB'] }}</br>
+<br> {{ ata['ATTACHMENTNAME'] }}</br>
+<br>{{ ata['Price'] }}</br>
+<br>{{ ata['News_submission_dt'] }}</br>
+<br>{{ ata['DissemDT'] }}</br>
+
 {% endfor %}
 {% endfor %}
 </p>
