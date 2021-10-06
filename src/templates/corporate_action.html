@@ -1,0 +1,68 @@
+<h1>Corporate Actions [ {{start_date}} - {{end_date}}]</h1>
+<h2></h2>
+
+
+<h3> Bonus </h3>
+<p>
+    {% for data in bonus %}
+    {% for ata in data %}
+<hr>
+<br>{{ ata['long_name'] }}</br>
+<br> {{ ata['price'] }}</br>
+<br>{{ ata['Purpose'] }}</br>
+<br>{{ ata['Ex_date'] }}</br>
+{% endfor %}
+{% endfor %}
+</p>
+
+<hr>
+<hr>
+
+<h3> Split </h3>
+<p>
+    {% for data in split %}
+    {% for ata in data %}
+<hr>
+<br>{{ ata['long_name'] }}</br>
+<br> {{ ata['price'] }}</br>
+<br>{{ ata['Purpose'] }}</br>
+<br>{{ ata['Ex_date'] }}</br>
+
+{% endfor %}
+{% endfor %}
+</p>
+
+<hr>
+<hr>
+
+<h3> Buyback </h3>
+<p>
+    {% for data in buyback %}
+    {% for ata in data %}
+<hr>
+<br>{{ ata['long_name'] }}</br>
+<br> {{ ata['price'] }}</br>
+<br>{{ ata['Purpose'] }}</br>
+<br>{{ ata['Ex_date'] }}</br>
+
+{% endfor %}
+{% endfor %}
+</p>
+
+<hr>
+<hr>
+
+<h3> Dividend </h3>
+<p>
+    {% for data in dividend %}
+    {% for ata in data %}
+<hr>
+<br>{{ ata['long_name'] }}</br>
+<br> {{ ata['price'] }}</br>
+<br>{{ ata['Purpose'] }}</br>
+<br>{{ ata['Ex_date'] }}</br>
+<br>{{ ata['dy'] }}</br>
+
+{% endfor %}
+{% endfor %}
+</p>

@@ -4,7 +4,6 @@ from bse.common_helper import get_current_script_price
 
 start_date = "20210721"
 end_date = "20210721"
-corporate_actions = ["Board+Meeting", "Corp.+Action", "AGM/EGM"]
 
 
 def format_corporate_action(data):
@@ -18,7 +17,7 @@ def format_corporate_action(data):
     return processed_data
 
 
-def get_corporate_action(corporate_action, start_date, end_date):
+def get_live_announcement(corporate_action, start_date, end_date):
     print("Start Date {}".format(start_date))
     print("End Date {}".format(end_date))
     dividend = []
@@ -67,26 +66,10 @@ def get_corporate_action(corporate_action, start_date, end_date):
         if "buyback" in data["NEWSSUB"].lower():
             buyback.append(format_corporate_action(data))
 
+    print(" Dividend {}".format(dividend))
+    print(" Buyback {}".format(buyback))
+    print(" Bonus {}".format(bonus))
+    print(" Split {}".format(split))
     result = {"dividend": dividend, "bonus": bonus, "split": split, "buyback": buyback}
 
     return result
-
-# for corporate_action in corporate_actions:
-#     dividend = []
-#     bonus = []
-#     split = []
-#     buyback = []
-#     result = get_corporate_action(corporate_action, start_date, end_date)
-#     if result.get("dividend"):
-#         dividend.append(result.get("dividend"))
-#     if result.get("bonus"):
-#         bonus.append(result.get("bonus"))
-#     if result.get("split"):
-#         split.append(result.get("split"))
-#     if result.get("buyback"):
-#         buyback.append(result.get("buyback"))
-#
-#     print("bonus {}".format(bonus))
-#     print("dividend {}".format(dividend))
-#     print("split {}".format(split))
-#     print("buyback {}".format(buyback))

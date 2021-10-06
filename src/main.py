@@ -1,21 +1,25 @@
-from flask import Flask, render_template
-from bse.live_announcement import get_corporate_action
 from datetime import datetime
+from datetime import timedelta
+
+from flask import Flask, render_template
+
+from bse.corporate_actions import get_corporate_actions
+from bse.live_announcement import get_live_announcement
 
 app = Flask(__name__)
 
 
-@app.route("/")
-def index():
+@app.route("/live_announcements")
+def live_announcement():
     start_date = datetime.today().strftime('%Y%m%d')
     end_date = datetime.today().strftime('%Y%m%d')
-    corporate_actions = ["Board+Meeting", "Corp.+Action", "AGM/EGM"]
+    live_announcement_types = ["Board+Meeting", "Corp.+Action", "AGM/EGM"]
     dividend = []
     bonus = []
     split = []
     buyback = []
-    for corporate_action in corporate_actions:
-        result = get_corporate_action(corporate_action, start_date, end_date)
+    for corporate_action in live_announcement_types:
+        result = get_live_announcement(corporate_action, start_date, end_date)
         if result.get("dividend"):
             dividend.append(result.get("dividend"))
         if result.get("bonus"):
@@ -25,9 +29,20 @@ def index():
         if result.get("buyback"):
             buyback.append(result.get("buyback"))
 
-    return render_template("index.html", dividend=dividend, bonus=bonus, split=split, buyback=buyback,
+    return render_template("live_announcement.html", dividend=dividend, bonus=bonus, split=split, buyback=buyback,
                            start_date=datetime.today().strftime('%Y-%m-%d'),
                            end_date=datetime.today().strftime('%Y-%m-%d'))
+
+
+@app.route("/corporate_actions")
+def corporate_actions():
+    start_date = (datetime.now() + timedelta(days=1)).strftime('%Y%m%d')
+    end_date = "20211231"
+    result = get_corporate_actions(start_date, end_date)
+    return render_template("corporate_action.html", dividend=result.get("dividend"), bonus=result.get("bonus"),
+                           split=result.get("split"), buyback=result.get("buyback"),
+                           start_date=(datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d'),
+                           end_date="2021-12-31")
 
 
 if __name__ == "__main__":
