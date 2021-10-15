@@ -7,10 +7,16 @@ from bse.corporate_actions import get_corporate_actions
 from bse.live_announcement import get_live_announcement
 
 app = Flask(__name__)
+port = 8082
+
+
+@app.route("/")
+def home_page():
+    return render_template("home_page.html", port=port)
 
 
 @app.route("/live_announcements")
-def live_announcement():
+def live_announcements():
     start_date = datetime.today().strftime('%Y%m%d')
     end_date = datetime.today().strftime('%Y%m%d')
     live_announcement_types = ["Board+Meeting", "Corp.+Action", "AGM/EGM"]
@@ -29,7 +35,7 @@ def live_announcement():
         if result.get("buyback"):
             buyback.append(result.get("buyback"))
 
-    return render_template("live_announcement.html", dividend=dividend, bonus=bonus, split=split, buyback=buyback,
+    return render_template("live_announcements.html", dividend=dividend, bonus=bonus, split=split, buyback=buyback,
                            start_date=datetime.today().strftime('%Y-%m-%d'),
                            end_date=datetime.today().strftime('%Y-%m-%d'))
 
@@ -39,11 +45,11 @@ def corporate_actions():
     start_date = (datetime.now() + timedelta(days=1)).strftime('%Y%m%d')
     end_date = "20211231"
     result = get_corporate_actions(start_date, end_date)
-    return render_template("corporate_action.html", dividend=result.get("dividend"), bonus=result.get("bonus"),
+    return render_template("corporate_actions.html", dividend=result.get("dividend"), bonus=result.get("bonus"),
                            split=result.get("split"), buyback=result.get("buyback"),
                            start_date=(datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d'),
                            end_date="2021-12-31")
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8082, debug=True)
+    app.run(host="0.0.0.0", port=port, debug=True)
