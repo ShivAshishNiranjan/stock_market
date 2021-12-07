@@ -43,7 +43,7 @@ def live_announcements():
 @app.route("/corporate_actions")
 def corporate_actions():
     start_date = (datetime.now() + timedelta(days=1)).strftime('%Y%m%d')
-    end_date = "20211231"
+    end_date = "20220331"
     result = get_corporate_actions(start_date, end_date)
     return render_template("corporate_actions.html", dividend=result.get("dividend"), bonus=result.get("bonus"),
                            split=result.get("split"), buyback=result.get("buyback"),
