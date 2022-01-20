@@ -48,7 +48,7 @@ def corporate_actions():
     return render_template("corporate_actions.html", dividend=result.get("dividend"), bonus=result.get("bonus"),
                            split=result.get("split"), buyback=result.get("buyback"),
                            start_date=(datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d'),
-                           end_date="2021-12-31")
+                           end_date="2022-03-31")
 
 
 if __name__ == "__main__":
