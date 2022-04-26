@@ -1,7 +1,7 @@
 from datetime import datetime
 from datetime import timedelta
 
-from flask import Flask, render_template
+from flask import Flask,request,render_template
 
 from bse.corporate_actions import get_corporate_actions
 from bse.live_announcement import get_live_announcement
@@ -17,8 +17,16 @@ def home_page():
 
 @app.route("/live_announcements")
 def live_announcements():
-    start_date = datetime.today().strftime('%Y%m%d')
-    end_date = datetime.today().strftime('%Y%m%d')
+    args = request.args
+    query_date = args.get("query_date")
+
+    if query_date:
+        start_date = query_date
+        end_date = query_date
+    else:
+        start_date = datetime.today().strftime('%Y%m%d')
+        end_date = datetime.today().strftime('%Y%m%d')
+
     live_announcement_types = ["Board+Meeting", "Corp.+Action", "AGM/EGM"]
     dividend = []
     bonus = []
