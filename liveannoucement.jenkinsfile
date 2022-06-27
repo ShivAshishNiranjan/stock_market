@@ -1,0 +1,39 @@
+def buildParameters() {
+  script {
+    properties([
+      parameters([
+        string(name: 'DATE', description: 'DATE for which you want to fetch live announcement', defaultValue: ''),
+      ])
+    ])
+  }
+}
+
+pipeline {
+  agent any
+
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '15', artifactNumToKeepStr: '15'))
+  }
+
+  stages {
+    stage('Build Parameters') {
+      steps {
+        script {
+          buildParameters()
+        }
+      }
+    }
+
+    stage('Fetch Live Announcement') {
+      steps {
+        echo "Fetch the live announcement for ${params.DATE}"
+      }
+    }
+
+    stage('Pushing the Report to S3') {
+      steps {
+        echo "Pushing the Report to S3"
+      }
+    }
+  }
+}
