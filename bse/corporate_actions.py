@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 from bse.common_helper import get_current_script_price
 
 
@@ -64,9 +65,15 @@ def get_corporate_actions(start_date, end_date):
             if "Split" in corporate_action["name"]:
                 split.append([result])
 
+    dividend_list = sorted(dividend_list, key=lambda d: d['dy'])
+
     print(" Dividend {}".format(dividend_list))
     print(" Buyback {}".format(buyback))
     print(" Bonus {}".format(bonus))
     print(" Split {}".format(split))
     result = {"dividend": dividend_list, "bonus": bonus, "split": split, "buyback": buyback}
     return result
+
+
+if __name__ == "__main__":
+    get_corporate_actions(datetime.today().strftime('%Y%m%d'), "20220630")

@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 
 from bse.common_helper import get_current_script_price
 
@@ -73,3 +74,7 @@ def get_live_announcement(corporate_action, start_date, end_date):
     result = {"dividend": dividend, "bonus": bonus, "split": split, "buyback": buyback}
 
     return result
+
+
+if __name__ == "__main__":
+    get_live_announcement("Corp.+Action", datetime.today().strftime('%Y%m%d'), datetime.today().strftime('%Y%m%d'))
