@@ -1,9 +1,9 @@
 from datetime import datetime
 from datetime import timedelta
 
-from flask import Flask,request,render_template
+from flask import Flask, request, render_template
 
-from bse.corporate_actions import get_corporate_actions
+from bse.corporate_actions import get_corporate_actions, get_upcoming_board_meetings
 from bse.live_announcement import get_live_announcement
 
 app = Flask(__name__)
@@ -51,12 +51,19 @@ def live_announcements():
 @app.route("/corporate_actions")
 def corporate_actions():
     start_date = (datetime.now() + timedelta(days=1)).strftime('%Y%m%d')
-    end_date = "20221231"
+    end_date = "20231231"
     result = get_corporate_actions(start_date, end_date)
     return render_template("corporate_actions.html", dividend=result.get("dividend"), bonus=result.get("bonus"),
                            split=result.get("split"), buyback=result.get("buyback"),
                            start_date=(datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d'),
-                           end_date="2022-12-31")
+                           end_date="2023-12-31")
+
+
+@app.route("/upcoming_board_meetings")
+def upcoming_board_meetings():
+    result = get_upcoming_board_meetings()
+    return render_template("upcoming_board_meetings.html", dividend=result.get("dividend"), bonus=result.get("bonus"),
+                           split=result.get("split"), buyback=result.get("buyback"))
 
 
 if __name__ == "__main__":
