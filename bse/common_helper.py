@@ -23,4 +23,7 @@ def get_current_script_price(script_code):
 
     response = requests.request("GET", url, headers=headers, data=payload)
 
-    return response.json()["CurrRate"]["LTP"]
+    if "LTP" in response.json()["CurrRate"]:
+        return response.json()["CurrRate"]["LTP"]
+    else:
+        return 0

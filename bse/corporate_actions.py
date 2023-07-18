@@ -43,33 +43,41 @@ def get_corporate_actions(start_date, end_date):
         }
 
         response = requests.request("GET", url, headers=headers, data=payload)
+        print(" Status Code {}".format(response.status_code))
         results = response.json()
-        for result in results:
-            result["price"] = get_current_script_price(result["scrip_code"])
-            if "Dividend" in corporate_action["name"]:
-                if len(result["Purpose"].split('-')) >= 2:
-                    dividend = float(result["Purpose"].split('-')[2].strip())
-                    if get_current_script_price(result["scrip_code"]) != '':
-                        dividend_yield = 100 * dividend / float(
-                            get_current_script_price(result["scrip_code"]))
-                        if dividend_yield > 2.5:
-                            result['dy'] = dividend_yield
-                            dividend_list.append([result])
+        if response.status_code != 500:
+            for result in results:
+                print(" result {}".format(result))
+                result["price"] = get_current_script_price(result["scrip_code"])
 
-            if "Bonus" in corporate_action["name"]:
-                bonus.append([result])
+                if "Dividend" in corporate_action["name"]:
+                    if len(result["Purpose"].split('-')) >= 2:
+                        dividend = float(result["Purpose"].split('-')[2].strip())
+                        if get_current_script_price(result["scrip_code"]) != '':
+                            dividend_yield = 100 * dividend / float(
+                                get_current_script_price(result["scrip_code"]))
+                            if dividend_yield > 2:
+                                result['dy'] = dividend_yield
+                                dividend_list.append([result])
 
-            if "Buyback" in corporate_action["name"]:
-                buyback.append([result])
+                if "Bonus" in corporate_action["name"]:
+                    bonus.append([result])
 
-            if "Split" in corporate_action["name"]:
-                split.append([result])
+                if "Buyback" in corporate_action["name"]:
+                    buyback.append([result])
 
-    print(" Dividend {}".format(dividend_list))
+                if "Split" in corporate_action["name"]:
+                    split.append([result])
+        else:
+            print("Status Code {}".format(response.status_code))
+
+    print("Dividend {}".format(dividend_list))
+    sorted_dividend_list = sorted(dividend_list, key=lambda x: x[0]['dy'])
+    print("sorted_dividend_list {}".format(sorted_dividend_list))
     print(" Buyback {}".format(buyback))
     print(" Bonus {}".format(bonus))
     print(" Split {}".format(split))
-    result = {"dividend": dividend_list, "bonus": bonus, "split": split, "buyback": buyback}
+    result = {"dividend": sorted_dividend_list, "bonus": bonus, "split": split, "buyback": buyback}
     return result
 
 
